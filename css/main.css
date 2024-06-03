@@ -1,0 +1,10 @@
+table, th, tr, td{
+    border: 2px solid black;
+
+}
+table{
+    margin-left: 100px;
+}
+hr{
+    border: 3px solid black;
+}
