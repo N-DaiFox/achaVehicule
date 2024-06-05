@@ -1,82 +1,63 @@
-<?php 
+<?php
+    // Import des ressources
     require_once 'service/db_connect.php';
 
-    //? La requête SELECT
-    $query = 'SELECT * FROM modeles ORDER BY marque ASC;';
+    // Creation d'un cookies avec une durée de vie de 30 jours (1 lui)
 
-    $stmt = $db_connexion->query($query);
+    setcookie('monCookieAvecDuree', 'Voici la valeur de mon Cookie, ceci est un mot de passe', time() + 3600 * 24 * 30);
+
+
+    // La requête SELECT
+    $requete = 'SELECT * FROM modeles ORDER BY marque ASC;';
+
+    // Préparation de la requête
+    $stmt = $db_connexion->query($requete);
+    // Récupération des résultats
     $listModeles = $stmt->fetchAll();
-    // var_dump($listModeles);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acces au BDD </title>
+    <title>PHP : SELECT sur une BDD</title>
 
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/form.css">
 </head>
 <body>
-    
-    <h1>Créer un script permettant d’afficher le contenu de la table « modeles » dans un tableau HTML. <br> Les résultats doivent être triés par marque</h1>
-    
+    <nav>
+        <a href="view/ajoutModele.php">Ajouter un modèle de voiture</a>
+        <a href="view/connect.php">Se connecter</a>
+    </nav>
+
+    <h1>PHP : Requêter (SELECT) sur une BDD</h1>
+
+    <p>Je souhaite afficher les données de la table modeles (triées par marque) qui sont présentes en BDD avec un tableau HTML</p>
+
     <table>
         <tr>
             <th>id_modele</th>
             <th>Modèle</th>
-            <th>Marque</th>
+            <th>marque</th>
             <th>Carburant</th>
         </tr>
-        <tr>
-            <?php 
-                // Affichage des donées
-                foreach ($listModeles as $modele) {
-                    echo '<tr>';
-                    foreach ($modele as $valeur) {
-                        echo '<td>' . $valeur . '</td>';
-                    }
-                    echo '</tr>';
-                }
-            ?>
-        </tr>
-    </table>
-
-    <br><hr><br>
-
-    <h2>Exercice 2 : Créer un formulaire qui permet l’insertion de nouvelles données dans la table « modeles ».</h2>
-
-
-    <form action="" method="POST" class="formulaireEntier">
-
-        <div class="form-control">
-            <input type="text" name="modele" id="Modele" placeholder="Modèle du véhicule à enregistrer">
-            
-        </div>
-        <div class="form-control">
-            <input type="text" name="marque" id="Marque" placeholder="Marque du véhicule à enregistrer">
-            
-        </div>
-        <div class="form-control">
-            <input type="text" name="carburant" id="Carburant" placeholder="Carburant qu'utilise le véhicule">
-            
-        </div>
         
-        <div class="form-control">
-            <input type="submit" class="btn-primary" value="VALIDER">      
-        </div>
-    </form>
+        <?php
+            // Affichage des données
+            foreach($listModeles as $modele){
+                echo '<tr>';
+                
+                foreach ($modele as $valeur) {
+                    echo '<td>' . $valeur . '</td>';
+                }
+                
+                echo '</tr>';
+            }
+        ?>
+        
+    </table> 
 
-            
-
-
-
-
-
-    
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <hr>
 </body>
 </html>
